@@ -1,8 +1,38 @@
-import React from 'react';
+'use client'
+import React, {useState} from 'react';
 import TopBar from '../TopNavigation/TopBar'
 import Link from 'next/link'
-const Blog = () => {
-  return (
+import Image from 'next/image'
+
+// Fetch data on the server using Server Components
+export async function getData() {
+  const res = await fetch('http://127.0.0.1:3333/posts');
+  return res.json();
+}
+
+
+const Blog = ({ data }) => {
+
+  // Use useState hook to manage data state
+  const [postData, setPostData] = useState(data);
+
+  // Function to update state with fetched data
+  const handleDataFetch = async () => {
+    const fetchedData = await getData();
+    setPostData(fetchedData);
+  };
+
+  // Check if data is available
+  if (!postData) {
+    // Data is not available, fetch it
+    handleDataFetch();
+    return <div>Loading...</div>;
+  }
+
+  // Data is available, render blog posts
+
+return (
+
 <div>
 <TopBar />
 <div class="flex mt-8 mb-4">
@@ -34,566 +64,42 @@ const Blog = () => {
       </div>
     </div>
     <div className="mx-auto mt-1 grid max-w-4xl grid-cols-1 gap-x-8 gap-y-2 border-t border-gray-200 pt-10 sm:mt-5 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3 overflow-hidden" style={{ overflowY: 'scroll', height:1500,}}>
-      <Link href={'/blog_details'}> 
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full rounded-md" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-                <img class="w-full" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}> 
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full rounded-md" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-                <img class="w-full" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}> 
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full rounded-md" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-                <img class="w-full" src="https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-        <img class="w-full" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3603&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
-  
-      <Link href={'/blog_details'}>
-      <article className="flex max-w-xl flex-col items-start justify-between">
-      <img class="w-full" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=3270&amp;q=80" alt="Sunset in the mountains"></img>
-        <div className="flex items-center gap-x-4 text-xs">
-          <time datetime="2020-03-16" className="text-gray-500">Mar 16, 2020</time>
-          <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">Marketing</a>
-        </div>
-        <div className="group relative">
-          <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-            <a href="#">
-              <span className="absolute inset-0"></span>
-              Boost your conversion rate
-            </a>
-          </h3>
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
-        </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href="#">
-                <span className="absolute inset-0"></span>
-                Michael Foster
-              </a>
-            </p>
-            <p className="text-gray-600">Co-Founder / CTO</p>
-          </div>
-        </div>
-      </article>
-      </Link>
+      {/* Loop through the fetched posts and display them */}
+            {postData.map(post => (
+              <Link href={`/blog_details`} key={post.post_id}>
+              {/**<Link href={`/blog_details/${post.post_slug}`} key={post.post_id}> */}
+                <article className="flex max-w-xl flex-col items-start justify-between">
+                  {/*<Image src={`/uploads/${post.post_image}`} width={500} height={500} className="w-full rounded-md" alt={post.post_title} />*/}
+                  <img src={`/uploads/${post.post_image}`} className="w-full rounded-md" alt={post.post_title} />
+                  <div className="flex items-center gap-x-4 text-xs">
+                    <time dateTime={post.post_date} className="text-gray-500">{post.post_date}</time>
+                    <a href="#" className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{post.post_category}</a>
+                  </div>
+                  <div className="group relative">
+                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                      <a href="#">
+                        <span className="absolute inset-0"></span>
+                        {post.post_title}
+                      </a>
+                    </h3>
+                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.post_content}</p>
+                  </div>
+                  {/* Author section */}
+                          <div className="relative mt-8 flex items-center gap-x-4">
+                 <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-10 w-10 rounded-full bg-gray-50" />
+                 <div className="text-sm leading-6">
+                 <p className="font-semibold text-gray-900">
+                 <a href="#">
+                 <span className="absolute inset-0"></span>
+                    Michael Foster
+                 </a>
+                 </p>
+                 <p className="text-gray-600">Co-Founder / CTO</p>
+                 </div>
+                 </div>
+                </article>
+              </Link>
+            ))}
 
     </div>
   </div>
