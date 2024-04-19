@@ -5,7 +5,6 @@ import Create from '@/components/BlogSection/Create'
 const CreatePost = () => {
   return (
     <>
-        <TopBar />
         <Create />
     </>
   )

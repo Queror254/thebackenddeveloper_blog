@@ -11,7 +11,7 @@ export default class BlogController {
         return response.status(200).json(posts);
   }
 
-public async create({ request, response }: HttpContextContract) {
+  public async create({ request, response }: HttpContextContract) {
   try {
     // Extracting required data from the request
     const { post_id, post_date, post_category, post_title, post_content } = request.only(['post_id', 'post_date', 'post_category', 'post_title', 'post_content'])
@@ -64,16 +64,17 @@ public async create({ request, response }: HttpContextContract) {
     console.error(error)
     return { error }
   }
-}
+  }
 
+  public async more({ params, view }: HttpContextContract) {
 
-  public async store({}: HttpContextContract) {}
+        try {
+            const details = await Post.query().where('post_slug', params.slug);
+            console.log('details', details)
+            return details;
+        } catch (error) {
+            return { error }
+        }
+  }
 
-  public async show({}: HttpContextContract) {}
-
-  public async edit({}: HttpContextContract) {}
-
-  public async update({}: HttpContextContract) {}
-
-  public async destroy({}: HttpContextContract) {}
 }
